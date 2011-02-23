@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+$: << 'lib'
+require 'gram'
+
+component = ARGV.shift
+args = ARGV
+
+raise "Unknown Gram component. Available components are: #{Gram::COMPONENTS.join(', ')}" unless Gram::COMPONENTS.include?(component)
+
+eval("Gram::#{component.capitalize}").run(*args)
