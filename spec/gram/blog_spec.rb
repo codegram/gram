@@ -2,6 +2,10 @@ require 'spec_helper'
 
 module Gram
   describe Blog do
+
+    before do
+      File.stub(:exists?).and_return true
+    end
    
     describe ".run" do
       it 'parses the file' do
