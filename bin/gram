@@ -3,8 +3,13 @@ $: << 'lib'
 require 'gram'
 
 component = ARGV.shift
+action = ARGV.shift
 args = ARGV
 
 raise "Unknown Gram component. Available components are: #{Gram::COMPONENTS.join(', ')}" unless Gram::COMPONENTS.include?(component)
 
-eval("Gram::#{component.capitalize}").run(*args)
+component_klass = eval("Gram::#{component.capitalize}")
+
+raise "Unknown action for #{component} component.\n#{component_klass.banner}\n" unless component_klass::ACTIONS.keys.map(&:to_s).include?(action)
+
+component_klass.send(action, *args)

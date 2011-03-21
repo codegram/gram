@@ -10,12 +10,9 @@ module Gram
           headers = raw_content.match(/---(.*)---/m)
           yaml = YAML.load($1.strip)
 
-          title = yaml["title"]
-          tagline = yaml["tagline"]
-
           content = raw_content.gsub(/---.*---/m, '').strip
 
-          { title: title, tagline: tagline, body: content }
+          yaml.update({ 'body' => content })
         end
 
       end
