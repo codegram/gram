@@ -15,9 +15,14 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "gram"
 
   s.add_runtime_dependency 'rest-client'
+  s.add_runtime_dependency 'thor'
+  s.add_runtime_dependency 'i18n'
+  s.add_runtime_dependency 'activesupport'
 
   s.add_development_dependency 'bundler', '~> 1.0.7'
   s.add_development_dependency 'rspec',   '~> 2.5.0'
+  s.add_development_dependency 'generator_spec', '~> 0.8.1'
+  s.add_development_dependency 'activemodel'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
