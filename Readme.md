@@ -29,7 +29,7 @@ To bootstrap a new gem, type this:
 
     $ gram gem create my_gem
 
-By default, the new gem will be using Minitest & Mocha. If you prefer RSpec:
+By default, the new gem will be using Minitest/Spec & Mocha. If you prefer RSpec:
 
     $ gram gem create my_gem --rspec
 
