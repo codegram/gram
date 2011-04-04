@@ -23,6 +23,24 @@ The `my_blogpost.markdown` file should be a regular markdown file with some head
     # My awesome header
     ## More markdown goodness, etc.
 
+##Gem component
+
+To bootstrap a new gem, type this:
+
+    $ gram gem create my_gem
+
+By default, the new gem will be using Minitest & Mocha. If you prefer RSpec:
+
+    $ gram gem create my_gem --rspec
+
+And if you want to create a Rails extension or anything requiring ActiveRecord,
+just use the `--rails` option:
+
+    $ gram gem create my_gem --rails
+
+This will add the required dependencies and enable the test suite to use
+ActiveRecord with in-memory sqlite :)
+
 ## Copyright
 
 Copyright (c) 2011 Codegram. See LICENSE for details.

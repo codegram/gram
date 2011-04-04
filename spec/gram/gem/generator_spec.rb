@@ -38,6 +38,75 @@ module Gram
               file ".rvmrc"
               file "Readme.md"
               file "my_gem.gemspec" do
+                contains "minitest"
+                contains "mocha"
+                contains "yard"
+                contains "bluecloth"
+              end
+              directory "lib" do
+                file "my_gem.rb"
+                directory "my_gem" do
+                  file "version.rb"
+                end
+              end
+              directory "spec" do
+                file "spec_helper.rb" do
+                  contains "minitest/spec"
+                end
+              end
+            end
+          }
+        end
+      end
+
+      context 'with --rails' do
+        it 'creates a new rails-ready gem' do
+          FileUtils.chdir File.expand_path('../../../../tmp', __FILE__)
+          Generator.new.generate('my_gem', ['--rails'])
+          destination_root.should have_structure {
+            directory "my_gem" do
+              file "Gemfile"
+              file "Rakefile"
+              file ".gitignore"
+              file ".rvmrc"
+              file "Readme.md"
+              file "my_gem.gemspec" do
+                contains "activerecord"
+                contains "sqlite3"
+
+                contains "minitest"
+                contains "mocha"
+                contains "bluecloth"
+              end
+              directory "lib" do
+                file "my_gem.rb"
+                directory "my_gem" do
+                  file "version.rb"
+                end
+              end
+              directory "spec" do
+                file "spec_helper.rb" do
+                  contains "minitest/spec"
+                  contains "ActiveRecord"
+                end
+              end
+            end
+          }
+        end
+      end
+
+      context 'with --rspec' do
+        it 'creates a new rspec-ready gem' do
+          FileUtils.chdir File.expand_path('../../../../tmp', __FILE__)
+          Generator.new.generate('my_gem', ['--rspec'])
+          destination_root.should have_structure {
+            directory "my_gem" do
+              file "Gemfile"
+              file "Rakefile"
+              file ".gitignore"
+              file ".rvmrc"
+              file "Readme.md"
+              file "my_gem.gemspec" do
                 contains "rspec"
                 contains "yard"
                 contains "bluecloth"
@@ -49,45 +118,12 @@ module Gram
                 end
               end
               directory "spec" do
-                file "spec_helper.rb"
+                file "spec_helper.rb" do
+                  contains "rspec"
+                end
               end
             end
           }
-        end
-
-        context 'with --rails' do
-          it 'creates a new rails-ready gem' do
-            FileUtils.chdir File.expand_path('../../../../tmp', __FILE__)
-            Generator.new.generate('my_gem', ['--rails'])
-            destination_root.should have_structure {
-              directory "my_gem" do
-                file "Gemfile"
-                file "Rakefile"
-                file ".gitignore"
-                file ".rvmrc"
-                file "Readme.md"
-                file "my_gem.gemspec" do
-                  contains "activerecord"
-                  contains "sqlite3"
-
-                  contains "rspec"
-                  contains "yard"
-                  contains "bluecloth"
-                end
-                directory "lib" do
-                  file "my_gem.rb"
-                  directory "my_gem" do
-                    file "version.rb"
-                  end
-                end
-                directory "spec" do
-                  file "spec_helper.rb" do
-                    contains "ActiveRecord"
-                  end
-                end
-              end
-            }
-          end
         end
       end
 

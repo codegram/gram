@@ -1,13 +1,9 @@
 require 'bundler'
 Bundler::GemHelper.install_tasks
 
-require 'rake/testtask'
+require 'rspec/core/rake_task'
 desc "Run <%= underscored %> specs"
-Rake::TestTask.new do |t|
-  t.libs << "spec"
-  t.test_files = FileList['spec/**/*_spec.rb']
-  t.verbose = true
-end
+RSpec::Core::RakeTask.new
 
 require 'yard'
 YARD::Rake::YardocTask.new(:docs) do |t|
@@ -48,4 +44,4 @@ task :graph do |t|
  `bundle exec yard graph -d --full --no-private | dot -Tpng -o graph.png && open graph.png`
 end
 
-task :default => [:test]
+task :default => [:spec]

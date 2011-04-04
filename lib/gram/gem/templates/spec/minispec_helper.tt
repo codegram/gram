@@ -1,0 +1,22 @@
+gem 'minitest'
+require 'minitest/spec'
+require 'minitest/autorun'
+require 'mocha'
+
+require '<%= underscored %>'
+<% if rails %>
+
+ActiveRecord::Base.establish_connection(
+  :adapter => 'sqlite3',
+  :database => ':memory:'
+)
+
+ActiveRecord::Schema.define do
+  create_table :articles do |t|
+    t.string     :name
+    t.integer    :price
+
+    t.timestamps
+  end
+end
+<% end %>

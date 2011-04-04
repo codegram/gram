@@ -11,13 +11,19 @@ module Gram
       no_tasks do
         def generate(name, options)
           @rails = true if options.include?("--rails")
+          @rspec = true if options.include?("--rspec")
+
           @underscored = name.underscore
           @camelized = name.camelize
 
           run "bundle gem #{@underscored}"
 
           remove_file("#{@underscored}/Rakefile")
-          template('templates/Rakefile.tt', "#{@underscored}/Rakefile")
+          if rspec
+            template('templates/Rakefile_rspec.tt', "#{@underscored}/Rakefile")
+          else
+            template('templates/Rakefile.tt', "#{@underscored}/Rakefile")
+          end
 
           remove_file("#{@underscored}/.gitignore")
           template('templates/gitignore.tt', "#{@underscored}/.gitignore")
@@ -26,7 +32,12 @@ module Gram
           template('templates/rvmrc.tt', "#{@underscored}/.rvmrc")
 
           empty_directory "#{@underscored}/spec"
-          template('templates/spec/spec_helper.tt', "#{@underscored}/spec/spec_helper.rb")
+          
+          if rspec
+            template('templates/spec/rspec_helper.tt', "#{@underscored}/spec/spec_helper.rb")
+          else
+            template('templates/spec/minispec_helper.tt', "#{@underscored}/spec/spec_helper.rb")
+          end
 
           inject_into_file "#{@underscored}/#{@underscored}.gemspec", :after => "s.rubyforge_project = \"#{@underscored}\"" do
             runtime_dependencies = []
@@ -34,8 +45,13 @@ module Gram
 
             development_dependencies = []
             development_dependencies << "  s.add_runtime_dependency 'sqlite3'" if rails
+            if rspec
+              development_dependencies << "  s.add_development_dependency 'rspec', '~> 2.5.0'"
+            else
+              development_dependencies << "  s.add_development_dependency 'minitest'"
+            end
+            development_dependencies << "  s.add_development_dependency 'mocha'" unless rspec
             development_dependencies += [
-              "  s.add_development_dependency 'rspec', '~> 2.5.0'",
               "  s.add_development_dependency 'yard'",
               "  s.add_development_dependency 'bluecloth'" ]
 
@@ -56,6 +72,10 @@ module Gram
 
       def rails
         @rails
+      end
+
+      def rspec
+        @rspec
       end
     end
   end
