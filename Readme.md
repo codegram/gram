@@ -41,6 +41,23 @@ just use the `--rails` option:
 This will add the required dependencies and enable the test suite to use
 ActiveRecord with in-memory sqlite :)
 
+##SSH component
+
+Put your peers in your `.gramrc`:
+
+    token: 289347287365872whatever
+    peers:
+      john: 192.168.1.43
+      jimmy: 192.168.1.99
+
+To paste your clipboard's content to your peer's:
+
+    $ gram ssh paste john
+
+You can also broadcast your clipboard's content to all your peers:
+
+    $ gram ssh broadcast
+
 ## Copyright
 
 Copyright (c) 2011 Codegram. See LICENSE for details.
