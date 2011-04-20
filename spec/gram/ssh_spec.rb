@@ -6,6 +6,7 @@ module Gram
     describe ".paste" do
       it 'pastes a post to a peer' do
         subject.stub(:get_peers).and_return({"josepjaume" => "192.168.1.55.55"})
+        subject.stub(:system)
         subject.should_receive(:system).with("pbpaste | ssh josepjaume@192.168.1.55.55 pbcopy")
 
         subject.paste 'josepjaume'
