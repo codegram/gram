@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    gram (0.2.0)
+    gram (0.3.0)
       activesupport
       i18n
       rest-client

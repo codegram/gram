@@ -5,6 +5,7 @@ module Gram
 
     before do
       File.stub(:exists?).and_return true
+      File.stub(:read).and_return "token: 29384728937598"
     end
    
     describe ".upload" do
